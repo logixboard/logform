@@ -6,7 +6,24 @@
  * Both the construction method and set of exposed
  * formats.
  */
-const format = exports.format = require('./format');
+exports.format = require('./format');
+exports.format.align = require('./align');
+exports.format.errors = require('./errors');
+exports.format.cli = require('./cli');
+exports.format.combine = require('./combine');
+exports.format.colorize = require('./colorize');
+exports.format.json = require('./json');
+exports.format.label = require('./label');
+exports.format.logstash = require('./logstash');
+exports.format.metadata = require('./metadata');
+exports.format.ms = require('./ms');
+exports.format.padLevels = require('./pad-levels');
+exports.format.prettyPrint = require('./pretty-print');
+exports.format.printf = require('./printf');
+exports.format.simple = require('./simple');
+exports.format.splat = require('./splat');
+exports.format.timestamp = require('./timestamp');
+exports.format.uncolorize = require('./uncolorize');
 
 /*
  * @api public
@@ -14,40 +31,3 @@ const format = exports.format = require('./format');
  * Registers the specified levels with logform.
  */
 exports.levels = require('./levels');
-
-/*
- * @api private
- * method {function} exposeFormat
- * Exposes a sub-format on the main format object
- * as a lazy-loaded getter.
- */
-function exposeFormat(name, path) {
-  path = path || name;
-  Object.defineProperty(format, name, {
-    get() {
-      return require(`./${path}.js`);
-    },
-    configurable: true
-  });
-}
-
-//
-// Setup all transports as lazy-loaded getters.
-//
-exposeFormat('align');
-exposeFormat('errors');
-exposeFormat('cli');
-exposeFormat('combine');
-exposeFormat('colorize');
-exposeFormat('json');
-exposeFormat('label');
-exposeFormat('logstash');
-exposeFormat('metadata');
-exposeFormat('ms');
-exposeFormat('padLevels', 'pad-levels');
-exposeFormat('prettyPrint', 'pretty-print');
-exposeFormat('printf');
-exposeFormat('simple');
-exposeFormat('splat');
-exposeFormat('timestamp');
-exposeFormat('uncolorize');
